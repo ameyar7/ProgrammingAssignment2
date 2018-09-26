@@ -1,0 +1,30 @@
+makeCacheMatrix <- function(x = numeric()) {
+m <- NULL
+z <- matrix(x, nrow=2, ncol=2)
+set1 <- function(y) {
+				z <- matrix(y, nrow=2, ncol=2)
+                x <<- z
+                m <<- NULL
+        }
+get1 <- function() z
+setinverse1 <- function(solve) m <<- solve
+getinverse1 <- function() m
+list(set1 = set1, get1 = get1,
+			 setinverse1 = setinverse1,
+			 getinverse1 = getinverse1)
+}
+
+## Write a short comment describing this function
+## Calculate the inverse of the matrix via solve function or get1 from cache if already solved
+
+CacheSolve <- function(x, ...) {
+        m <- x$getinverse1()
+        if(!is.null(m)) {
+                message("getting cached data")
+                return(m)
+        }
+        data <- x$get1()
+		m <- solve(data)
+        x$setinverse1(m)
+        m
+}
